@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<div id="progressBar"></div>
+
 <nav id="navbar">
   <div class="nav-inner">
     <span class="nav-logo">⚓ Cruise Ship Simulator</span>
@@ -15,13 +17,16 @@
       <a href="#lines" class="nav-link">Cruise Lines</a>
       <a href="#ships" class="nav-link">Ships</a>
       <a href="#stats" class="nav-link">Fleet Stats</a>
+      <a href="#roblox" class="nav-link">Roblox Live</a>
       <a href="#about" class="nav-link">About</a>
+      <button id="themeToggle" class="icon-btn" title="Toggle theme">🌙</button>
     </div>
   </div>
 </nav>
 
 <header id="hero">
   <div class="hero-bg"></div>
+  <div class="hero-ship" id="heroShip">🚢</div>
   <div class="hero-content">
     <h1>Cruise Lines &amp; Ships</h1>
     <p>Explore the world's greatest cruise lines — from Carnival's fun ships to Disney's magical vessels and beyond.</p>
@@ -30,6 +35,7 @@
       <div class="hero-stat"><span class="hero-num" data-target="93">0</span><span>Ships</span></div>
       <div class="hero-stat"><span class="hero-num" data-target="270000" data-suffix="+">0</span><span>Passengers</span></div>
     </div>
+    <button id="randomShipBtn" class="hero-btn">🎲 Random Ship</button>
   </div>
 </header>
 
@@ -50,7 +56,21 @@
       <h2>Fleet Explorer</h2>
       <div class="ships-controls">
         <div class="filter-tabs" id="filterTabs"></div>
-        <input type="text" id="searchInput" placeholder="Search ships..." class="search-input">
+        <div class="ships-toolbar">
+          <input type="text" id="searchInput" placeholder="Search ships..." class="search-input">
+          <select id="sortSelect" class="sort-select">
+            <option value="name">Sort: Name A-Z</option>
+            <option value="year-desc">Sort: Newest First</option>
+            <option value="year-asc">Sort: Oldest First</option>
+            <option value="capacity-desc">Sort: Largest Capacity</option>
+            <option value="capacity-asc">Sort: Smallest Capacity</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" title="Grid view">▦</button>
+            <button class="view-btn" data-view="list" title="List view">☰</button>
+          </div>
+        </div>
+        <span id="resultCount" class="result-count"></span>
       </div>
     </div>
     <div class="ships-grid" id="shipsGrid"></div>
@@ -96,12 +116,44 @@
     </div>
   </section>
 
+  <!-- ROBLOX LIVE -->
+  <section id="roblox" class="section">
+    <div class="section-header">
+      <h2>Roblox Live</h2>
+      <p>Live data from the Roblox API — search users or check game stats</p>
+    </div>
+    <div class="roblox-grid">
+      <div class="roblox-panel">
+        <div class="roblox-panel-header">👤 User Lookup</div>
+        <div class="roblox-input-row">
+          <input type="text" id="robloxUserInput" placeholder="Enter Roblox username..." class="search-input" style="flex:1">
+          <button id="robloxUserBtn" class="hero-btn" style="margin:0;padding:10px 24px;font-size:0.9rem">Search</button>
+        </div>
+        <div id="robloxUserResult" class="roblox-result">
+          <div class="roblox-placeholder">Try searching a username like "BuildIntoGames"</div>
+        </div>
+      </div>
+      <div class="roblox-panel">
+        <div class="roblox-panel-header">🎮 Game Stats</div>
+        <div class="roblox-input-row">
+          <input type="text" id="robloxGameInput" placeholder="Enter Roblox Universe ID..." class="search-input" style="flex:1">
+          <button id="robloxGameBtn" class="hero-btn" style="margin:0;padding:10px 24px;font-size:0.9rem">Load</button>
+        </div>
+        <div id="robloxGameResult" class="roblox-result">
+          <div class="roblox-placeholder">Try Universe ID <strong>4483383389</strong> (Livedy)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
   <p>TableBoard Studio — Cruise Ship Simulator &bull; Fan-made Fleet Guide</p>
   <p class="footer-credit">Not affiliated with Roblox, Carnival Corp, Disney, or any cruise line.</p>
 </footer>
+
+<button id="backToTop" class="back-to-top" title="Back to top">⬆</button>
 
 <div id="shipModal" class="modal">
   <div class="modal-backdrop"></div>
