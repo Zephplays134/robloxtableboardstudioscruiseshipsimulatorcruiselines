@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cruise Ship Simulator - Bloxival & Bloxney Cruise Lines</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">🚢 CSS Hub</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#bloxival">Bloxival</a></li>
+        <li><a href="#bloxney">Bloxney</a></li>
+        <li><a href="#lines">All Lines</a></li>
+        <li><a href="#ships">Ships</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Cruise Ship Simulator</h1>
+      <p>Tableboard Studios — Explore the ultimate cruise experience in Roblox</p>
+      <div class="hero-badges">
+        <span class="badge badge-bloxival">Bloxival Cruise Line</span>
+        <span class="badge badge-bloxney">Bloxney Cruise Line</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="bloxival" class="section">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-bloxival">Bloxival</span> Cruise Line</h2>
+      <p class="section-desc">Luxury meets adventure on the high seas. Bloxival offers premium cruise experiences with world-class entertainment.</p>
+      <div class="ship-grid" id="bloxival-ships"></div>
+    </div>
+  </section>
+
+  <section id="bloxney" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-bloxney">Bloxney</span> Cruise Line</h2>
+      <p class="section-desc">Magical voyages inspired by wonder and imagination. Bloxney brings themed cruising to life.</p>
+      <div class="ship-grid" id="bloxney-ships"></div>
+    </div>
+  </section>
+
+  <section id="lines" class="section">
+    <div class="container">
+      <h2 class="section-title">All Cruise Lines</h2>
+      <p class="section-desc">Every cruise line featured in Cruise Ship Simulator</p>
+      <div class="lines-grid" id="lines-grid"></div>
+    </div>
+  </section>
+
+  <section id="ships" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">All Ships</h2>
+      <p class="section-desc">Browse the complete fleet across all cruise lines</p>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Bloxival">Bloxival</button>
+        <button class="filter-btn" data-filter="Bloxney">Bloxney</button>
+        <button class="filter-btn" data-filter="Other">Other</button>
+      </div>
+      <div class="ship-grid" id="all-ships"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Fan website for <strong>Tableboard Studios — Cruise Ship Simulator</strong> on Roblox.</p>
+      <p>Not affiliated with Roblox, Tableboard Studios, or any cruise line.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
