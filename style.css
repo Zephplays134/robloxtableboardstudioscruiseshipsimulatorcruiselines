@@ -485,6 +485,76 @@ body.light .spotlight-stat span { color: #6a5a6a; }
 .music-toggle.playing { border-color: rgba(0,255,133,0.3); color: #00ff85; box-shadow: 0 0 20px rgba(0,255,133,0.12); }
 .music-toggle.playing:hover { border-color: rgba(0,255,133,0.5); }
 
+/* ─── Music Player Panel ─── */
+.music-player {
+  position: fixed; bottom: 92px; right: 28px; z-index: 998;
+  width: 260px;
+  background: rgba(11,14,23,0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(226,35,26,0.08);
+  border-radius: 20px;
+  padding: 16px 18px 14px;
+  display: none; flex-direction: column; gap: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: fadeIn 0.3s ease-out;
+}
+.music-player.open { display: flex; }
+.mp-header { display: flex; justify-content: space-between; align-items: center; }
+.mp-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #5a7a8a; }
+.mp-close { background: none; border: none; color: #5a7a8a; cursor: pointer; font-size: 0.85rem; padding: 2px 6px; border-radius: 6px; transition: all 0.2s; }
+.mp-close:hover { background: rgba(226,35,26,0.1); color: #ff6b6b; }
+.mp-track { font-size: 0.88rem; font-weight: 600; color: #e8edf4; padding: 6px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mp-controls { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.mp-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(226,35,26,0.06); border: 1px solid rgba(226,35,26,0.1);
+  color: #e8edf4; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.mp-btn:hover { background: rgba(226,35,26,0.12); border-color: rgba(226,35,26,0.2); transform: scale(1.05); }
+.mp-play { width: 48px; height: 48px; background: linear-gradient(135deg, #E2231A, #FF4444); border: 2px solid rgba(255,215,0,0.1); box-shadow: 0 0 16px rgba(226,35,26,0.15); }
+.mp-play:hover { box-shadow: 0 0 24px rgba(226,35,26,0.25); }
+.mp-play.playing { border-color: rgba(0,255,133,0.3); box-shadow: 0 0 20px rgba(0,255,133,0.1); }
+.mp-volume { display: flex; align-items: center; gap: 8px; }
+.mp-vol-icon { font-size: 0.8rem; color: #5a7a8a; width: 20px; text-align: center; }
+.mp-slider {
+  flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px;
+  background: rgba(226,35,26,0.1); outline: none; transition: all 0.2s;
+}
+.mp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%;
+  background: #E2231A; cursor: pointer; border: 2px solid rgba(255,215,0,0.15);
+  transition: all 0.2s;
+}
+.mp-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.mp-slider::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #E2231A; cursor: pointer; border: 2px solid rgba(255,215,0,0.15); }
+.mp-list { display: flex; flex-direction: column; gap: 4px; max-height: 100px; overflow-y: auto; }
+.mp-list::-webkit-scrollbar { width: 2px; }
+.mp-list::-webkit-scrollbar-thumb { background: rgba(226,35,26,0.15); border-radius: 2px; }
+.mp-list-item {
+  font-size: 0.75rem; padding: 5px 8px; border-radius: 8px;
+  color: #5a7a8a; cursor: pointer; transition: all 0.2s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mp-list-item:hover { background: rgba(226,35,26,0.04); color: #e8edf4; }
+.mp-list-item.active { background: rgba(226,35,26,0.08); color: #ff6b6b; font-weight: 600; }
+body.light .music-player { background: rgba(255,248,245,0.95); border-color: rgba(226,35,26,0.06); }
+body.light .mp-title { color: #8a7a7a; }
+body.light .mp-track { color: #1a2a3a; }
+body.light .mp-btn { background: rgba(226,35,26,0.04); border-color: rgba(226,35,26,0.06); color: #4a5a5a; }
+body.light .mp-btn:hover { background: rgba(226,35,26,0.08); }
+body.light .mp-list-item { color: #8a7a7a; }
+body.light .mp-list-item:hover { background: rgba(226,35,26,0.03); color: #1a2a3a; }
+body.light .mp-list-item.active { background: rgba(226,35,26,0.06); color: #E2231A; }
+body.light .mp-slider { background: rgba(226,35,26,0.08); }
+
+@media (max-width: 600px) {
+  .music-player { width: calc(100% - 32px); right: 16px; bottom: 148px; }
+  .music-toggle { bottom: 148px; }
+  .music-player { bottom: 148px; }
+}
+
 /* ─── Cruise Cards ─── */
 .cruise-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; }
 .cruise-card {
