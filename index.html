@@ -271,6 +271,10 @@
       <div class="compare-table-wrap">
         <table class="compare-table" id="compareTable"></table>
       </div>
+      <div class="compare-visual">
+        <h3>Fleet Size Comparison (Top 10)</h3>
+        <div id="compareBars"></div>
+      </div>
     </div>
   </section>
 
@@ -368,6 +372,8 @@
       </div>
     </div>
   </section>
+
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <div class="confetti-container" id="confettiContainer"></div>
 
@@ -477,10 +483,10 @@
         <div class="footer-col footer-newsletter">
           <h4>Stay Updated</h4>
           <p>Get the latest CSS fleet news and updates.</p>
-          <div class="newsletter-wrap">
+          <form class="newsletter-wrap" id="newsletterForm">
             <input type="email" placeholder="your@email.com" id="newsletterEmail">
-            <button id="newsletterBtn" aria-label="Subscribe">→</button>
-          </div>
+            <button type="submit" id="newsletterBtn" aria-label="Subscribe">→</button>
+          </form>
         </div>
       </div>
       <div class="footer-bottom">

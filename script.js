@@ -286,8 +286,8 @@ function getLine(name) {
 /* ─── Render Cruises ─── */
 function renderCruises() {
   const grid = document.getElementById('cruiseGrid');
-  grid.innerHTML = data.lines.map(l => `
-    <div class="cruise-card" style="--accent: ${l.color}" onclick="scrollToSection('lines')">
+  grid.innerHTML = data.lines.map((l, i) => `
+    <div class="cruise-card" style="--accent: ${l.color};--reveal-delay:${i * 0.06}s" data-reveal onclick="scrollToSection('lines')">
       <span class="cruise-icon">${l.icon}</span>
       <h3>${l.name}</h3>
       <span class="cruise-line">${l.ships} ships · ${l.decks} decks · Founded ${l.founded}</span>
@@ -303,11 +303,11 @@ function renderLines() {
   const featured = data.lines.filter(l => l.id === 'bloxival' || l.id === 'bloxney');
   const others = data.lines.filter(l => l.id !== 'bloxival' && l.id !== 'bloxney');
   const all = [...featured, ...others];
-  grid.innerHTML = all.map(l => {
+  grid.innerHTML = all.map((l, i) => {
     const isFeatured = l.id === 'bloxival' ? 'featured' : l.id === 'bloxney' ? 'featured-bloxney' : '';
     const lineShips = data.ships.filter(s => s.line === l.name);
     return `
-      <div class="line-card ${isFeatured}">
+      <div class="line-card ${isFeatured}" style="--reveal-delay:${i * 0.05}s" data-reveal>
         <span class="line-icon">${l.icon}</span>
         <h3>${l.name}</h3>
         <span class="line-tag ${l.tag}">${l.ships} ships · ${l.decks} decks · Founded ${l.founded}</span>
@@ -405,10 +405,10 @@ function renderShips(filter, searchTerm) {
     const t = searchTerm.toLowerCase();
     ships = ships.filter(s => s.name.toLowerCase().includes(t) || s.line.toLowerCase().includes(t) || s.desc.toLowerCase().includes(t));
   }
-  grid.innerHTML = ships.map(s => {
+  grid.innerHTML = ships.map((s, i) => {
     const tag = lineTag(s.line);
     return `
-      <div class="ship-card" onclick="openShipModal('${s.name.replace(/'/g, "\\'")}')">
+      <div class="ship-card" style="--reveal-delay:${i * 0.04}s" data-reveal onclick="openShipModal('${s.name.replace(/'/g, "\\'")}')">
         <span class="ship-icon">${s.icon}</span>
         <h3>${s.name}</h3>
         <span class="ship-line ${tag}">${s.line}</span>
@@ -501,11 +501,11 @@ document.addEventListener('keydown', function(e) {
 function renderGallery(filter) {
   const grid = document.getElementById('galleryGrid');
   const items = filter === 'all' ? data.gallery : data.gallery.filter(g => g.line === filter);
-  grid.innerHTML = items.map(g => {
+  grid.innerHTML = items.map((g, i) => {
     const ship = data.ships.find(s => s.name === g.name);
     const deckCount = ship ? ship.decks : '?';
     return `
-      <div class="gallery-item" onclick="openShipModal('${g.name.replace(/'/g, "\\'")}')">
+      <div class="gallery-item" data-reveal style="--reveal-delay:${i * 0.04}s" onclick="openShipModal('${g.name.replace(/'/g, "\\'")}')">
         <div class="gallery-item-preview" style="background:linear-gradient(135deg, rgba(${g.line === 'bloxival' ? '0,119,182' : g.line === 'bloxney' ? '244,63,94' : '100,100,100'},0.05), rgba(5,10,24,0.5))">
           ${g.emoji}
         </div>
@@ -545,8 +545,8 @@ function renderTimeline() {
 function renderCrew() {
   const grid = document.getElementById('crewGrid');
   if (!grid) return;
-  grid.innerHTML = data.crew.map(c => `
-    <div class="crew-card">
+  grid.innerHTML = data.crew.map((c, i) => `
+    <div class="crew-card" style="--reveal-delay:${i * 0.05}s" data-reveal>
       <div class="crew-avatar">${c.avatar}</div>
       <h3>${c.name}</h3>
       <div class="crew-role">${c.role} · ${c.line.replace(' Cruise Line', '')}</div>
@@ -559,8 +559,8 @@ function renderCrew() {
 function renderAwards() {
   const grid = document.getElementById('awardsGrid');
   if (!grid) return;
-  grid.innerHTML = data.awards.map(a => `
-    <div class="award-card">
+  grid.innerHTML = data.awards.map((a, i) => `
+    <div class="award-card" data-reveal style="--reveal-delay:${i * 0.04}s">
       <div class="award-icon">${a.icon}</div>
       <h3>${a.title}</h3>
       <div class="award-desc">${a.line}</div>
@@ -626,8 +626,8 @@ setInterval(() => {
 /* ─── Destinations ─── */
 function renderDestinations() {
   const grid = document.getElementById('destinationsGrid');
-  grid.innerHTML = data.destinations.map(d => `
-    <div class="destination-card">
+  grid.innerHTML = data.destinations.map((d, i) => `
+    <div class="destination-card" style="--reveal-delay:${i * 0.06}s" data-reveal>
       <span class="dest-icon">${d.icon}</span>
       <h3>${d.name}</h3>
       <span class="dest-region">${d.region}</span>
@@ -677,14 +677,59 @@ function renderCompareBars() {
   if (!container) return;
   const max = Math.max(...data.lines.map(l => l.ships));
   container.innerHTML = data.lines.slice(0, 10).map(l => `
-    <div class="compare-row">
-      <span class="compare-label">${l.icon} ${l.name}</span>
+    <div class="compare-bar-row">
+      <span class="compare-bar-label">${l.icon} ${l.name.replace(' Cruise Line', '')}</span>
       <div class="compare-bar-track">
         <div class="compare-bar-fill" style="width:${(l.ships / max) * 100}%;background:${l.color}"></div>
       </div>
-      <span class="compare-value">${l.ships}</span>
+      <span class="compare-bar-value">${l.ships}</span>
     </div>
   `).join('');
+}
+
+/* ─── Spotlight ─── */
+function renderSpotlight() {
+  const wrap = document.getElementById('spotlightWrap');
+  const featured = data.lines.filter(l => l.id === 'bloxival' || l.id === 'bloxney');
+  const maxShips = Math.max(...data.ships.map(s => s.decks));
+  wrap.innerHTML = featured.map((l, idx) => {
+    const ships = data.ships.filter(s => s.line === l.name);
+    const top = ships.reduce((a, b) => a.decks > b.decks ? a : b, ships[0]);
+    return `
+      <div class="spotlight-card${idx === 0 ? ' active' : ''}">
+        <span class="spotlight-ship-icon">${l.icon}</span>
+        <h3>${l.name}</h3>
+        <span class="spotlight-line">${ships.length} ships · Flagship: ${top.name}</span>
+        <p>${l.desc}</p>
+        <div class="spotlight-stats">
+          <div class="spotlight-stat"><strong>${l.ships}</strong><span>Ships</span></div>
+          <div class="spotlight-stat"><strong>${l.decks}</strong><span>Decks</span></div>
+          <div class="spotlight-stat"><strong>${l.rating}</strong><span>Rating</span></div>
+          <div class="spotlight-stat"><strong>$${l.price}</strong><span>From</span></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  const dots = document.createElement('div');
+  dots.className = 'spotlight-nav';
+  dots.innerHTML = featured.map((_, i) => `<button class="spotlight-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></button>`).join('');
+  wrap.appendChild(dots);
+  dots.addEventListener('click', e => {
+    const btn = e.target.closest('.spotlight-dot');
+    if (!btn) return;
+    document.querySelectorAll('.spotlight-dot').forEach(d => d.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.spotlight-card').forEach((c, i) => c.classList.toggle('active', i === parseInt(btn.dataset.idx)));
+  });
+  let idx = 0;
+  setInterval(() => {
+    const cards = wrap.querySelectorAll('.spotlight-card');
+    const dots = wrap.querySelectorAll('.spotlight-dot');
+    cards.forEach(c => c.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    idx = (idx + 1) % cards.length;
+    if (cards[idx]) { cards[idx].classList.add('active'); dots[idx].classList.add('active'); }
+  }, 6000);
 }
 
 /* ─── Hero Stats Counter ─── */
@@ -799,19 +844,6 @@ document.getElementById('backToTop').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-/* ─── Carousel ─── */
-function initSpotlight() {
-  const items = document.querySelectorAll('.spotlight-card');
-  if (!items.length) return;
-  let idx = 0;
-  items[0].classList.add('active');
-  setInterval(() => {
-    items.forEach(i => i.classList.remove('active'));
-    idx = (idx + 1) % items.length;
-    items[idx].classList.add('active');
-  }, 5000);
-}
-
 /* ─── Countdown ─── */
 function startCountdown() {
   const el = document.getElementById('countdownTimer');
@@ -854,9 +886,10 @@ function initNewsletter() {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const input = this.querySelector('input');
-    if (!input.value.trim()) return;
+    if (!input || !input.value.trim()) return;
     showNotification('\u2709\uFE0F Subscribed! Welcome aboard!');
     input.value = '';
+    fireConfetti();
   });
 }
 
@@ -1333,14 +1366,27 @@ window.addEventListener('scroll', () => {
 });
 
 /* ─── Mobile nav ─── */
-document.getElementById('navToggle').addEventListener('click', () => {
-  document.querySelector('.nav-links').classList.toggle('open');
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.querySelector('.nav-links');
+const navOverlay = document.getElementById('navOverlay');
+
+function toggleMobileNav(open) {
+  navLinks.classList.toggle('open', open);
+  navToggle.classList.toggle('open', open);
+  if (navOverlay) navOverlay.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+navToggle.addEventListener('click', () => {
+  toggleMobileNav(!navLinks.classList.contains('open'));
 });
 
+if (navOverlay) {
+  navOverlay.addEventListener('click', () => toggleMobileNav(false));
+}
+
 document.querySelectorAll('.n-link').forEach(l => {
-  l.addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.remove('open');
-  });
+  l.addEventListener('click', () => toggleMobileNav(false));
 });
 
 /* ─── Scroll reveal ─── */
@@ -1348,12 +1394,22 @@ function revealOnScroll() {
   document.querySelectorAll('[data-reveal]').forEach(el => {
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight - 80) {
+      const delay = el.style.getPropertyValue('--reveal-delay') || '0s';
+      el.style.transitionDelay = delay;
       el.classList.add('revealed');
     }
   });
 }
 
-window.addEventListener('scroll', revealOnScroll);
+let revealThrottle = null;
+window.addEventListener('scroll', () => {
+  if (!revealThrottle) {
+    revealThrottle = requestAnimationFrame(() => {
+      revealOnScroll();
+      revealThrottle = null;
+    });
+  }
+});
 
 function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
@@ -1411,7 +1467,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCompare();
   renderCompareBars();
   renderFooter();
-  initSpotlight();
+  renderSpotlight();
   createParticles();
 
   startCountdown();
