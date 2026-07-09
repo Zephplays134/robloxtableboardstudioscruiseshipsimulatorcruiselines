@@ -3,166 +3,474 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TableBoard Studio — Cruise Ship Simulator: Cruise Lines</title>
+  <title>Cruise Ship Simulator — Bloxival Addon | Tableboard Studios</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div id="progressBar"></div>
-
-<nav id="navbar">
-  <div class="nav-inner">
-    <span class="nav-logo">⚓ Cruise Ship Simulator</span>
-    <div class="nav-links">
-      <a href="#lines" class="nav-link">Cruise Lines</a>
-      <a href="#ships" class="nav-link">Ships</a>
-      <a href="#stats" class="nav-link">Fleet Stats</a>
-      <a href="#roblox" class="nav-link">Roblox Live</a>
-      <a href="#about" class="nav-link">About</a>
-      <button id="themeToggle" class="icon-btn" title="Toggle theme">🌙</button>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-ship">⛵</div>
+      <div class="loading-bar"><div class="loading-fill"></div></div>
+      <div class="loading-text" id="loadingText">Loading fleet data...</div>
     </div>
   </div>
-</nav>
 
-<header id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-ship" id="heroShip">🚢</div>
-  <div class="hero-content">
-    <h1>Cruise Lines &amp; Ships</h1>
-    <p>Explore the world's greatest cruise lines — from Carnival's fun ships to Disney's magical vessels and beyond.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-num" data-target="28">0</span><span>Cruise Lines</span></div>
-      <div class="hero-stat"><span class="hero-num" data-target="93">0</span><span>Ships</span></div>
-      <div class="hero-stat"><span class="hero-num" data-target="270000" data-suffix="+">0</span><span>Passengers</span></div>
-    </div>
-    <button id="randomShipBtn" class="hero-btn">🎲 Random Ship</button>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="particle-field" id="particleField"></div>
+  <div class="deep-waves" id="deepWaves"></div>
+
+  <div class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    <svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
   </div>
-</header>
 
-<main>
-
-  <!-- CRUISE LINES SECTION -->
-  <section id="lines" class="section">
-    <div class="section-header">
-      <h2>Cruise Lines</h2>
-      <p>Click a line to explore its fleet</p>
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        <svg class="logo-svg" viewBox="0 0 40 40" width="36" height="36">
+          <defs>
+            <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#E2231A"/>
+              <stop offset="50%" stop-color="#FFD700"/>
+              <stop offset="100%" stop-color="#00A2FF"/>
+            </linearGradient>
+          </defs>
+          <path d="M8 28 Q20 8 32 28 L30 30 Q20 18 10 30 Z" fill="url(#lg)" opacity="0.9"/>
+          <rect x="18" y="16" width="4" height="14" rx="2" fill="#fff" opacity="0.7"/>
+          <circle cx="20" cy="13" r="3" fill="#fff" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">BLOX<span class="logo-dim">IVAL</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home" class="n-link active">Home</a></li>
+        <li><a href="#cruises" class="n-link">Cruises</a></li>
+        <li><a href="#lines" class="n-link">Lines</a></li>
+        <li><a href="#fleet" class="n-link">Fleet</a></li>
+        <li><a href="#crew" class="n-link">Crew</a></li>
+        <li><a href="#gallery" class="n-link">Gallery</a></li>
+        <li><a href="#booking" class="n-link">Book</a></li>
+        <li><a href="#compare" class="n-link">Compare</a></li>
+        <li><a href="#faq" class="n-link">FAQ</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="lines-grid" id="linesGrid"></div>
+  </nav>
+
+  <section id="home" class="hero">
+    <div class="hero-waves">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+        <path class="wave wave-1" d="M0,100 C360,200 720,0 1080,100 C1260,150 1350,100 1440,120 L1440,200 L0,200 Z"/>
+        <path class="wave wave-2" d="M0,130 C240,50 540,180 840,100 C1080,40 1260,140 1440,100 L1440,200 L0,200 Z"/>
+        <path class="wave wave-3" d="M0,160 C180,100 390,200 630,140 C870,80 1140,180 1440,130 L1440,200 L0,200 Z"/>
+      </svg>
+    </div>
+    <div class="hero-bg">
+      <div class="hero-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+      </div>
+    </div>
+    <div class="hero-ship parallax" data-speed="0.3">
+      <svg viewBox="0 0 200 120" width="320" height="192">
+        <defs>
+          <linearGradient id="hullGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(0,119,182,0.15)"/>
+            <stop offset="100%" stop-color="rgba(0,180,216,0.25)"/>
+          </linearGradient>
+        </defs>
+        <path d="M30 90 L170 90 L190 75 L10 75 Z" fill="url(#hullGrad)" stroke="rgba(0,180,216,0.25)" stroke-width="1"/>
+        <rect x="60" y="40" width="80" height="35" rx="4" fill="rgba(0,180,216,0.1)" stroke="rgba(0,180,216,0.2)" stroke-width="0.5"/>
+        <rect x="65" y="25" width="30" height="18" rx="3" fill="rgba(144,224,239,0.08)" stroke="rgba(144,224,239,0.15)" stroke-width="0.5"/>
+        <rect x="70" y="28" width="6" height="4" rx="1" fill="rgba(144,224,239,0.2)"/>
+        <rect x="80" y="28" width="6" height="4" rx="1" fill="rgba(144,224,239,0.2)"/>
+        <rect x="90" y="28" width="6" height="4" rx="1" fill="rgba(144,224,239,0.2)"/>
+        <rect x="100" y="28" width="6" height="4" rx="1" fill="rgba(144,224,239,0.2)"/>
+        <rect x="110" y="28" width="6" height="4" rx="1" fill="rgba(144,224,239,0.2)"/>
+        <rect x="120" y="28" width="6" height="4" rx="1" fill="rgba(144,224,239,0.2)"/>
+        <circle cx="100" cy="96" r="6" fill="rgba(0,180,216,0.2)"/>
+        <path d="M5 90 L195 90" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <line x1="60" y1="80" x2="60" y2="40" stroke="rgba(0,180,216,0.08)" stroke-width="0.5"/>
+        <line x1="140" y1="80" x2="140" y2="40" stroke="rgba(0,180,216,0.08)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-chip fade-in">Tableboard Studios Addon</div>
+      <h1 class="hero-title fade-in">Cruise Ship<br><span class="grad">Simulator</span></h1>
+      <p class="hero-sub fade-in" id="heroSub">The ultimate companion for Bloxival, Bloxney & every cruise line across the Roblox seas</p>
+      <div class="hero-actions fade-in">
+        <a href="#fleet" class="btn btn-primary">Explore the Fleet</a>
+        <a href="#booking" class="btn btn-outline">Book a Voyage</a>
+        <a href="#gallery" class="btn btn-ghost">View Gallery</a>
+        <a href="#crew" class="btn btn-ghost">Meet the Crew</a>
+      </div>
+      <div class="hero-stats fade-in">
+        <div class="h-stat"><span class="h-num" id="statLines">0</span><span class="h-lbl">Lines</span></div>
+        <div class="h-stat"><span class="h-num" id="statShips">0</span><span class="h-lbl">Ships</span></div>
+        <div class="h-stat"><span class="h-num" id="statDecks">0</span><span class="h-lbl">Decks</span></div>
+        <div class="h-stat"><span class="h-num" id="statCabins">0</span><span class="h-lbl">Cabins</span></div>
+        <div class="h-stat"><span class="h-num" id="statDestinations">0</span><span class="h-lbl">Ports</span></div>
+      </div>
+      <div class="countdown-banner fade-in" id="countdownBanner">
+        <span class="countdown-label">Next sailing in</span>
+        <span class="countdown-timer" id="countdownTimer">--d --h --m --s</span>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+        <rect x="1" y="1" width="14" height="22" rx="7" stroke="currentColor" stroke-width="2" fill="none"/>
+        <circle cx="8" cy="8" r="2" fill="currentColor" class="scroll-dot"/>
+      </svg>
+    </div>
   </section>
 
-  <!-- SHIPS SECTION -->
-  <section id="ships" class="section">
-    <div class="section-header">
-      <h2>Fleet Explorer</h2>
-      <div class="ships-controls">
-        <div class="filter-tabs" id="filterTabs"></div>
-        <div class="ships-toolbar">
-          <input type="text" id="searchInput" placeholder="Search ships..." class="search-input">
-          <select id="sortSelect" class="sort-select">
-            <option value="name">Sort: Name A-Z</option>
-            <option value="year-desc">Sort: Newest First</option>
-            <option value="year-asc">Sort: Oldest First</option>
-            <option value="capacity-desc">Sort: Largest Capacity</option>
-            <option value="capacity-asc">Sort: Smallest Capacity</option>
-          </select>
-          <div class="view-toggle">
-            <button class="view-btn active" data-view="grid" title="Grid view">▦</button>
-            <button class="view-btn" data-view="list" title="List view">☰</button>
+  <section id="spotlight" class="section section-alt">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Spotlight</span>
+        <h2 class="section-title">Featured <span class="grad">Ship</span></h2>
+        <p class="section-sub">The crown jewel of the CSS fleet — rotating showcase every 6 seconds</p>
+      </div>
+      <div class="spotlight-wrap" id="spotlightWrap"></div>
+    </div>
+  </section>
+
+  <section id="cruises" class="section">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Cruises</span>
+        <h2 class="section-title">Available <span class="grad">Cruises</span></h2>
+        <p class="section-sub">Discover every cruise line featured in Tableboard Studios' Cruise Ship Simulator</p>
+      </div>
+      <div class="cruise-grid" id="cruiseGrid"></div>
+    </div>
+  </section>
+
+  <section id="lines" class="section section-alt">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Lines</span>
+        <h2 class="section-title">Bloxival & <span class="grad">Bloxney</span></h2>
+        <p class="section-sub">The two signature Roblox cruise lines — plus the full fleet of partners</p>
+      </div>
+      <div class="lines-showcase" id="linesShowcase"></div>
+    </div>
+  </section>
+
+  <section id="fleet" class="section">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Fleet</span>
+        <h2 class="section-title">Complete Ship <span class="grad">Registry</span></h2>
+        <p class="section-sub">Every vessel in the CSS universe — filterable, searchable, explorable</p>
+      </div>
+      <div class="fleet-controls fade-in">
+        <div class="filter-row" id="filterRow">
+          <button class="f-btn active" data-f="all">All</button>
+        </div>
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" id="fleetSearch" placeholder="Search ships..." autocomplete="off">
+        </div>
+      </div>
+      <div class="ship-grid" id="shipGrid"></div>
+    </div>
+  </section>
+
+  <section id="crew" class="section section-alt">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Crew</span>
+        <h2 class="section-title">Meet the <span class="grad">Captains</span></h2>
+        <p class="section-sub">The visionary leaders behind every cruise line in the CSS universe</p>
+      </div>
+      <div class="crew-grid" id="crewGrid"></div>
+    </div>
+  </section>
+
+  <section id="awards" class="section">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Awards</span>
+        <h2 class="section-title">Fleet <span class="grad">Achievements</span></h2>
+        <p class="section-sub">Every milestone, award, and record held by the CSS fleet</p>
+      </div>
+      <div class="awards-grid" id="awardsGrid"></div>
+    </div>
+  </section>
+
+  <section id="gallery" class="section section-alt">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Gallery</span>
+        <h2 class="section-title">Ship <span class="grad">Gallery</span></h2>
+        <p class="section-sub">Explore the fleet through immersive concept renders and deck previews</p>
+      </div>
+      <div class="gallery-filter">
+        <button class="g-btn active" data-g="all">All Ships</button>
+        <button class="g-btn" data-g="bloxival">Bloxival</button>
+        <button class="g-btn" data-g="bloxney">Bloxney</button>
+        <button class="g-btn" data-g="other">Other</button>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="timeline">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">History</span>
+        <h2 class="section-title">Cruise <span class="grad">Timeline</span></h2>
+        <p class="section-sub">The evolution of CSS cruise lines from inception to present</p>
+      </div>
+      <div class="timeline" id="timelineContainer"></div>
+    </div>
+  </section>
+
+  <section id="destinations" class="section">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Destinations</span>
+        <h2 class="section-title">Explore <span class="grad">Destinations</span></h2>
+        <p class="section-sub">Discover the breathtaking ports of call across every CSS cruise route</p>
+      </div>
+      <div class="destinations-grid" id="destinationsGrid"></div>
+    </div>
+  </section>
+
+  <section id="reviews" class="section section-alt">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Reviews</span>
+        <h2 class="section-title">What Players <span class="grad">Say</span></h2>
+        <p class="section-sub">Real feedback from the CSS community across all cruise lines</p>
+      </div>
+      <div class="reviews-carousel" id="reviewsCarousel">
+        <button class="carousel-btn prev" id="reviewPrev">‹</button>
+        <div class="reviews-track" id="reviewsTrack"></div>
+        <button class="carousel-btn next" id="reviewNext">›</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" class="section">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Compare</span>
+        <h2 class="section-title">Line <span class="grad">Comparison</span></h2>
+        <p class="section-sub">See how every cruise line stacks up side by side</p>
+      </div>
+      <div class="compare-table-wrap">
+        <table class="compare-table" id="compareTable"></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="booking" class="section section-form">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Booking</span>
+        <h2 class="section-title">Book Your <span class="grad">Voyage</span></h2>
+        <p class="section-sub">Reserve your spot aboard the finest ships in Roblox</p>
+      </div>
+      <div class="booking-container">
+        <div class="booking-card glass" id="bookingCard">
+          <form id="bookingForm" class="booking-form">
+            <div class="form-row triple">
+              <div class="form-group floating">
+                <input type="text" id="robloxUser" placeholder=" " required>
+                <label>Roblox Username</label>
+              </div>
+              <div class="form-group floating">
+                <select id="cruiseLine" required>
+                  <option value="" disabled selected></option>
+                </select>
+                <label>Cruise Line</label>
+              </div>
+              <div class="form-group floating">
+                <select id="cruiseShip" required>
+                  <option value="" disabled selected></option>
+                </select>
+                <label>Ship</label>
+              </div>
+            </div>
+            <div class="form-row triple">
+              <div class="form-group floating">
+                <input type="date" id="departDate" placeholder=" " required>
+                <label>Departure Date</label>
+              </div>
+              <div class="form-group floating">
+                <input type="number" id="passengers" min="1" max="10" value="1" placeholder=" ">
+                <label>Passengers</label>
+              </div>
+              <div class="form-group floating">
+                <select id="cabinClass">
+                  <option value="Interior">Interior</option>
+                  <option value="Ocean View">Ocean View</option>
+                  <option value="Balcony">Balcony</option>
+                  <option value="Suite">Suite</option>
+                  <option value="Penthouse">Penthouse</option>
+                </select>
+                <label>Cabin Class</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group floating">
+                <textarea id="specialRequests" rows="2" placeholder=" "></textarea>
+                <label>Special Requests</label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Confirm Booking</button>
+          </form>
+        </div>
+        <div class="booking-conf glass" id="bookingConf">
+          <h3>Booking Confirmed</h3>
+          <div class="conf-details" id="confDetails"></div>
+          <button class="btn btn-outline btn-full" id="newBookingBtn">New Booking</button>
+        </div>
+        <div class="booking-price-indicator" id="priceIndicator">
+          <span class="price-label">Estimated Total</span>
+          <span class="price-amount" id="priceAmount">$0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section section-alt">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">FAQ</span>
+        <h2 class="section-title">Frequently <span class="grad">Asked</span></h2>
+        <p class="section-sub">Everything you need to know about CSS cruise lines, booking, and the fleet</p>
+      </div>
+      <div class="faq-container" id="faqContainer"></div>
+    </div>
+  </section>
+
+  <section class="section section-dark cta-section">
+    <div class="container">
+      <div class="cta-content fade-in">
+        <span class="cta-icon">⚓</span>
+        <h2 class="cta-title">Ready to Set Sail?</h2>
+        <p>Join thousands of players exploring the CSS universe aboard Bloxival, Bloxney, and beyond.</p>
+        <div class="cta-actions">
+          <a href="#booking" class="btn btn-primary">Book Now</a>
+          <a href="#fleet" class="btn btn-outline">Browse Fleet</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <div class="notification" id="notification"></div>
+
+  <div class="music-toggle" id="musicToggle" aria-label="Toggle nightcore music">🎵</div>
+
+  <div class="chat-toggle" id="chatToggle" aria-label="Open chat assistant">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  </div>
+
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <span class="chat-header-icon">⛵</span>
+        <div>
+          <span class="chat-header-title">Bloxival AI</span>
+          <span class="chat-header-status">⚡ Coding + Cruise</span>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button id="chatClear" aria-label="Clear chat" title="Clear conversation">🗑️</button>
+        <button id="chatClose" aria-label="Close chat">✕</button>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="msg-avatar">⚓</div>
+        <div class="msg-bubble">Ahoy! I'm your cruise & coding copilot. Ask about ships, booking, Bloxival, Bloxney — or Roblox Lua scripts, parts, GUIs, tweens, and more!</div>
+      </div>
+    </div>
+    <div class="chat-input-wrap">
+      <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off">
+      <button id="chatSend" aria-label="Send message">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content glass" id="modalContent">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">CSS<span>+</span></div>
+          <p>Ultimate companion addon for Tableboard Studios' Cruise Ship Simulator on Roblox. Not affiliated with Roblox Corporation or Tableboard Studios.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Discord">⧩</a>
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="YouTube">▶</a>
+            <a href="#" aria-label="Roblox">⚽</a>
+            <a href="#" aria-label="TikTok">♪</a>
           </div>
         </div>
-        <span id="resultCount" class="result-count"></span>
-      </div>
-    </div>
-    <div class="ships-grid" id="shipsGrid"></div>
-  </section>
-
-  <!-- FLEET STATS -->
-  <section id="stats" class="section">
-    <div class="section-header">
-      <h2>Fleet Statistics</h2>
-    </div>
-    <div class="stats-wrapper">
-      <div class="stat-card">
-        <span class="stat-icon">🚢</span>
-        <span class="stat-label">Total Ships</span>
-        <span class="stat-value" id="statShips">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">🏗️</span>
-        <span class="stat-label">Ship Classes</span>
-        <span class="stat-value" id="statClasses">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">📅</span>
-        <span class="stat-label">Avg. Year Built</span>
-        <span class="stat-value" id="statYear">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">👨‍👩‍👧‍👦</span>
-        <span class="stat-label">Max Capacity</span>
-        <span class="stat-value" id="statCapacity">0</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="section-header">
-      <h2>About This Guide</h2>
-    </div>
-    <div class="about-content">
-      <p>This fleet guide is a companion for <strong>TableBoard Studio's Cruise Ship Simulator</strong> on Roblox. It catalogs real-world cruise lines and ships — from the iconic Carnival fleet and Disney's magical liners to luxury lines and mega-ships from around the globe.</p>
-      <p>Whether you're a roleplayer, a builder, or just love ships, use this guide to explore vessels, compare specs, and plan your next virtual voyage.</p>
-    </div>
-  </section>
-
-  <!-- ROBLOX LIVE -->
-  <section id="roblox" class="section">
-    <div class="section-header">
-      <h2>Roblox Live</h2>
-      <p>Live data from the Roblox API — search users or check game stats</p>
-    </div>
-    <div class="roblox-grid">
-      <div class="roblox-panel">
-        <div class="roblox-panel-header">👤 User Lookup</div>
-        <div class="roblox-input-row">
-          <input type="text" id="robloxUserInput" placeholder="Enter Roblox username..." class="search-input" style="flex:1">
-          <button id="robloxUserBtn" class="hero-btn" style="margin:0;padding:10px 24px;font-size:0.9rem">Search</button>
+        <div class="footer-col">
+          <h4>Cruise Lines</h4>
+          <ul id="footerLines"></ul>
         </div>
-        <div id="robloxUserResult" class="roblox-result">
-          <div class="roblox-placeholder">Try searching a username like "BuildIntoGames"</div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#fleet">Fleet Registry</a></li>
+            <li><a href="#booking">Book a Cruise</a></li>
+            <li><a href="#compare">Compare Lines</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#crew">Meet the Crew</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://www.roblox.com/games" target="_blank">Roblox Games</a></li>
+            <li><a href="https://www.roblox.com/groups/tableboard-studios" target="_blank">Tableboard Studios</a></li>
+            <li><a href="https://www.roblox.com/groups" target="_blank">CSS Community</a></li>
+            <li><a href="https://devforum.roblox.com" target="_blank">Roblox DevForum</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-newsletter">
+          <h4>Stay Updated</h4>
+          <p>Get the latest CSS fleet news and updates.</p>
+          <div class="newsletter-wrap">
+            <input type="email" placeholder="your@email.com" id="newsletterEmail">
+            <button id="newsletterBtn" aria-label="Subscribe">→</button>
+          </div>
         </div>
       </div>
-      <div class="roblox-panel">
-        <div class="roblox-panel-header">🎮 Game Stats</div>
-        <div class="roblox-input-row">
-          <input type="text" id="robloxGameInput" placeholder="Enter Roblox Universe ID..." class="search-input" style="flex:1">
-          <button id="robloxGameBtn" class="hero-btn" style="margin:0;padding:10px 24px;font-size:0.9rem">Load</button>
-        </div>
-        <div id="robloxGameResult" class="roblox-result">
-          <div class="roblox-placeholder">Try Universe ID <strong>4483383389</strong> (Livedy)</div>
-        </div>
+      <div class="footer-bottom">
+        <p>Fan-made resource for educational purposes. Cruise line names belong to their respective owners.</p>
       </div>
     </div>
-  </section>
+  </footer>
 
-</main>
-
-<footer>
-  <p>TableBoard Studio — Cruise Ship Simulator &bull; Fan-made Fleet Guide</p>
-  <p class="footer-credit">Not affiliated with Roblox, Carnival Corp, Disney, or any cruise line.</p>
-</footer>
-
-<button id="backToTop" class="back-to-top" title="Back to top">⬆</button>
-
-<div id="shipModal" class="modal">
-  <div class="modal-backdrop"></div>
-  <div class="modal-content">
-    <button class="modal-close">&times;</button>
-    <div class="modal-body"></div>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
