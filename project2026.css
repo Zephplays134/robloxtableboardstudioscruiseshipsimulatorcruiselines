@@ -1,0 +1,46 @@
+/* Project 2026 Command Center — inspired by the supplied Roblox build-mode screenshot */
+#project2026{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 10% 10%,rgba(50,215,255,.12),transparent 28rem),
+  radial-gradient(circle at 90% 20%,rgba(91,140,255,.10),transparent 30rem);
+}
+#project2026 .container{position:relative;z-index:2}
+.p26-shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;padding:18px;border:1px solid rgba(148,190,255,.15);border-radius:26px;background:rgba(7,13,27,.62);box-shadow:0 30px 100px rgba(0,0,0,.34);backdrop-filter:blur(22px)}
+.p26-sidebar{padding:16px;border:1px solid rgba(148,190,255,.12);border-radius:20px;background:rgba(13,22,39,.76)}
+.p26-side-label{font:700 10px Inter,sans-serif;letter-spacing:.14em;color:#7187a5;text-transform:uppercase;margin-bottom:12px}
+.p26-side-button{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border:1px solid transparent;border-radius:12px;background:transparent;color:#b9c9dd;text-align:left;font:600 13px Inter,sans-serif;cursor:pointer}
+.p26-side-button.active,.p26-side-button:hover{color:#fff;border-color:rgba(50,215,255,.26);background:rgba(50,215,255,.09)}
+.p26-side-count{margin-left:auto;color:#6f849f;font:600 11px monospace}
+.p26-main{min-width:0}
+.p26-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;padding:12px 14px;border:1px solid rgba(148,190,255,.12);border-radius:16px;background:rgba(10,18,34,.72)}
+.p26-toolbar-title{font:800 13px Inter,sans-serif;letter-spacing:.03em}
+.p26-toolbar-sub{font-size:11px;color:#7f95b0;margin-top:3px}
+.p26-refresh{border:1px solid rgba(50,215,255,.25);border-radius:10px;background:rgba(50,215,255,.08);color:#dff9ff;padding:9px 12px;font:700 11px Inter,sans-serif;cursor:pointer}
+.p26-refresh:hover{background:rgba(50,215,255,.14)}
+.p26-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.p26-card{min-height:118px;padding:18px;border:1px solid rgba(148,190,255,.12);border-radius:18px;background:linear-gradient(145deg,rgba(18,30,51,.88),rgba(8,15,29,.82));box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.p26-card-label{font:700 10px Inter,sans-serif;letter-spacing:.12em;color:#7e94ad;text-transform:uppercase}
+.p26-card-value{margin-top:14px}
+.p26-badge{display:inline-flex;align-items:center;padding:8px 10px;border-radius:10px;font:800 12px Inter,sans-serif;letter-spacing:.02em}
+.p26-yes{color:#caffdf;background:rgba(67,245,154,.10);border:1px solid rgba(67,245,154,.25)}
+.p26-no{color:#ffd6d6;background:rgba(255,100,100,.08);border:1px solid rgba(255,100,100,.20)}
+.p26-neutral{color:#dbe8ff;background:rgba(91,140,255,.09);border:1px solid rgba(91,140,255,.22)}
+.p26-meta{margin-top:10px;font-size:11px;color:#738aa4}
+.p26-status-row{display:flex;align-items:center;gap:8px}
+.p26-pulse-dot{width:8px;height:8px;border-radius:50%;background:#43f59a;box-shadow:0 0 16px rgba(67,245,154,.75);animation:p26pulse 1.5s ease-in-out infinite}
+.p26-pulse-dot.p26-stale{background:#ffd166;box-shadow:0 0 16px rgba(255,209,102,.5)}
+@keyframes p26pulse{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+.p26-evidence-wrap{margin-top:14px;padding:18px;border:1px solid rgba(148,190,255,.12);border-radius:18px;background:rgba(8,15,29,.72)}
+.p26-evidence-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:12px}
+.p26-evidence-head h3{margin:0;font:800 15px Inter,sans-serif}.p26-evidence-head p{margin:3px 0 0;color:#7890aa;font-size:11px}
+.p26-evidence-list{display:grid;gap:8px}
+.p26-evidence{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid rgba(148,190,255,.10);border-radius:12px;color:#dcecff;text-decoration:none;background:rgba(255,255,255,.025)}
+.p26-evidence:hover{border-color:rgba(50,215,255,.28);background:rgba(50,215,255,.06)}
+.p26-evidence-dot{width:7px;height:7px;flex:none;border-radius:50%;background:#32d7ff;box-shadow:0 0 12px rgba(50,215,255,.6)}
+.p26-evidence strong{display:block;font-size:12px}.p26-evidence small{display:block;margin-top:3px;color:#7e95ae;font-size:10px}.p26-arrow{margin-left:auto;color:#6e88a6}
+.p26-teasers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.p26-teaser{position:relative;min-height:190px;padding:18px;overflow:hidden;border:1px solid rgba(148,190,255,.12);border-radius:18px;background:linear-gradient(145deg,rgba(19,31,53,.86),rgba(7,13,27,.86));box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.p26-teaser::after{content:"";position:absolute;inset:-40% -20%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.055) 50%,transparent 62%);transform:translateX(-70%) rotate(8deg);transition:.7s;pointer-events:none}.p26-teaser:hover::after{transform:translateX(70%) rotate(8deg)}
+.p26-teaser-no{font:800 10px Inter,sans-serif;letter-spacing:.12em;color:#68819e}
+.p26-teaser-icon{margin-top:16px;font-size:30px;color:#32d7ff}.p26-teaser h3{margin:10px 0 7px;font:800 16px Inter,sans-serif}.p26-teaser p{margin:0;color:#8fa4bd;font-size:12px;line-height:1.55}.p26-teaser-meta{display:inline-block;margin-top:14px;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.04);color:#7189a3;font-size:10px}
+.p26-disclaimer{margin-top:12px;color:#667d97;font-size:10px;line-height:1.5}
+@media(max-width:900px){.p26-shell{grid-template-columns:1fr}.p26-sidebar{display:none}.p26-grid,.p26-teasers{grid-template-columns:1fr}.p26-toolbar{align-items:flex-start;flex-direction:column}}
