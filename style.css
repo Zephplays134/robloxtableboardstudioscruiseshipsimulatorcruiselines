@@ -1,4 +1,5 @@
 @import url("./legacy-style.css");
+@import url("./modern-addon.css");
 
 :root{
   --modern-bg:#050816;
