@@ -1,0 +1,43 @@
+{
+  "project2026Detected": true,
+  "testingStatus": "Not publicly confirmed",
+  "releaseStatus": "To be announced",
+  "checkedAt": "2026-09-19T13:24:10.473Z",
+  "evidence": [
+    {
+      "title": "Roblox — Cruise Ship Simulator",
+      "detail": "The current Cruise Ship Simulator page identifies Tableboard Studios as the creator and links its community.",
+      "url": "https://www.roblox.com/games/17234598656/Cruise-Ship-Simulator"
+    },
+    {
+      "title": "Tableboard Studios group listing",
+      "detail": "A current public group mirror lists Project 2026 (2026) as a current game with release details to be announced.",
+      "url": "https://www.rolimons.com/group/4795028"
+    },
+    {
+      "title": "Tableboard Studios projects page",
+      "detail": "Public project history and development information for the studio.",
+      "url": "https://sites.google.com/view/tableboardstudios/projects"
+    }
+  ],
+  "teasers": [
+    {
+      "icon": "◈",
+      "title": "Project 2026 is publicly listed",
+      "detail": "A public Tableboard Studios group listing currently includes Project 2026 with 2026 in its listing.",
+      "meta": "Detected"
+    },
+    {
+      "icon": "▣",
+      "title": "Release details remain TBA",
+      "detail": "The public listing does not provide a confirmed launch date in the evidence checked.",
+      "meta": "No date detected"
+    },
+    {
+      "icon": "◎",
+      "title": "Testing status is not confirmed",
+      "detail": "The detector does not mark Project 2026 as publicly tested unless a checked source explicitly says so.",
+      "meta": "Awaiting evidence"
+    }
+  ]
+}
