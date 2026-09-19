@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cruise Ship Simulator — Bloxival Addon | Tableboard Studios</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project2026.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#050816">
@@ -49,6 +50,7 @@
       <ul class="nav-links">
         <li><a href="#home" class="n-link active">Home</a></li>
         <li><a href="#cruises" class="n-link">Cruises</a></li>
+        <li><a href="#project2026" class="n-link">Project 2026</a></li>
         <li><a href="#lines" class="n-link">Lines</a></li>
         <li><a href="#fleet" class="n-link">Fleet</a></li>
         <li><a href="#crew" class="n-link">Crew</a></li>
@@ -141,6 +143,67 @@
         <p class="section-sub">The crown jewel of the CSS fleet — rotating showcase every 6 seconds</p>
       </div>
       <div class="spotlight-wrap" id="spotlightWrap"></div>
+    </div>
+  </section>
+
+  <section id="project2026" class="section section-dark">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="section-badge">Project 2026</span>
+        <h2 class="section-title">Project <span class="grad">2026</span> Command Center</h2>
+        <p class="section-sub">Public-information tracker for the next Tableboard Studios project, with automatic status polling and evidence-based teasers.</p>
+      </div>
+
+      <div class="p26-shell">
+        <aside class="p26-sidebar">
+          <div class="p26-side-label">BUILD MODE</div>
+          <button class="p26-side-button active"><span>◈</span> Project 2026 <span class="p26-side-count">LIVE</span></button>
+          <button class="p26-side-button" onclick="document.getElementById('p26Evidence')?.scrollIntoView({behavior:'smooth'})"><span>▦</span> Evidence <span class="p26-side-count">3</span></button>
+          <button class="p26-side-button" onclick="document.getElementById('p26Teasers')?.scrollIntoView({behavior:'smooth'})"><span>◇</span> Teasers <span class="p26-side-count">3</span></button>
+          <div class="p26-side-label" style="margin-top:24px">MONITOR</div>
+          <div class="p26-status-row"><span class="p26-pulse-dot"></span><span style="font-size:11px;color:#8fa4bd">Auto detection</span></div>
+          <div style="margin-top:9px;font-size:10px;color:#607792">Browser polls every 5 seconds. Public-source snapshot is updated by GitHub Actions when enabled.</div>
+        </aside>
+
+        <main class="p26-main">
+          <div class="p26-toolbar">
+            <div>
+              <div class="p26-toolbar-title">TABLEBOARD STUDIOS / PROJECT 2026</div>
+              <div class="p26-toolbar-sub" id="p26SourceState">Starting automatic monitor…</div>
+            </div>
+            <button class="p26-refresh" id="p26Refresh">↻ Check now</button>
+          </div>
+
+          <div class="p26-grid" id="p26Pulse">
+            <article class="p26-card">
+              <div class="p26-card-label">Making Project 2026?</div>
+              <div class="p26-card-value" id="p26Detected">Checking…</div>
+              <div class="p26-meta">Detection is based on the public sources in the evidence panel.</div>
+            </article>
+            <article class="p26-card">
+              <div class="p26-card-label">Testing status</div>
+              <div class="p26-card-value" id="p26Testing">Checking…</div>
+              <div class="p26-meta">A test claim is not marked confirmed without public evidence.</div>
+            </article>
+            <article class="p26-card">
+              <div class="p26-card-label">Release status</div>
+              <div class="p26-card-value" id="p26Release">Checking…</div>
+              <div class="p26-meta">Last snapshot: <span id="p26Updated">—</span></div>
+            </article>
+          </div>
+
+          <div class="p26-evidence-wrap">
+            <div class="p26-evidence-head">
+              <div><h3>Public evidence</h3><p>Sources checked by the monitor</p></div>
+              <span class="p26-badge p26-neutral">AUTO</span>
+            </div>
+            <div class="p26-evidence-list" id="p26Evidence"></div>
+          </div>
+
+          <div class="p26-teasers" id="p26Teasers"></div>
+          <p class="p26-disclaimer">This is a fan-made tracker. “Detected” means the monitored public source contains a Project 2026 reference; it does not independently prove private development progress, a test build, or a launch date.</p>
+        </main>
+      </div>
     </div>
   </section>
 
@@ -498,5 +561,6 @@
 
   <script src="script.js"></script>
   <script src="modern-addon.js" defer></script>
+  <script src="project2026.js" defer></script>
 </body>
 </html>
